@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { FaGraduationCap, FaGlobeAsia, FaLaptopCode } from "react-icons/fa";
+import { FaGraduationCap, FaLaptopCode } from "react-icons/fa";
 import Image from 'next/image';
 import UELogo from "@/public/UELogo.png";
 import MTLogo from "@/public/Manila_Teachers_Partylist.png";
@@ -62,7 +62,7 @@ export function RoadmapSection() {
         transition={{ duration: 0.6 }}
         className="text-3xl font-extrabold text-center text-white mb-14 relative z-20"
       >
-        My <span className="text-blue-500">Journey</span>
+        My Journey
       </motion.h2>
 
       {/* Timeline */}
