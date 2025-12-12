@@ -3,6 +3,7 @@
 import ProfileCard from "@/src/component/ProfileCard";
 import LightRays from "@/src/component/LightRays";
 import { motion } from "framer-motion";
+import { FaArrowDown } from "react-icons/fa"; // Import the down arrow icon
 
 export default function Hero() {
   return (
@@ -42,6 +43,14 @@ export default function Hero() {
           status="Available"
         />
       </motion.div>
+
+       {/* Rectangular Card with Bulging Arrow Down */}
+       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center items-center">
+         {/* Card Wrapper */}
+         <div className="bg-white p-6 px-20 rounded-t-md flex justify-center items-center">
+           <FaArrowDown className="text-black text-4xl" /> {/* Using the icon */}
+         </div>
+       </div>
     </section>
   );
 }
