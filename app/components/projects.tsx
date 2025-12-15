@@ -28,6 +28,24 @@ export function ProjectsSection() {
   const LifeStyleTravel = "/LifeStyleTravel.png";
   const CDV = "/CDV.png";
 
+  useEffect(() => {
+  const updateItemsPerSlide = () => {
+    if (window.innerWidth < 640) {
+      setItemsPerSlide(1); // mobile
+    } else if (window.innerWidth < 1024) {
+      setItemsPerSlide(2); // tablet
+    } else {
+      setItemsPerSlide(3); // desktop
+    }
+  };
+
+  updateItemsPerSlide();
+  window.addEventListener("resize", updateItemsPerSlide);
+
+  return () => window.removeEventListener("resize", updateItemsPerSlide);
+}, []);
+
+
   const projects: Project[] = [
     {
       id: 1,
@@ -43,20 +61,31 @@ export function ProjectsSection() {
     { id: 7, title: "LifeStyle Travel Website", description: "Advertising website showcasing travel deals.", img: LifeStyleTravel },
   ];
 
-  const itemsPerSlide = 3;
+  const [itemsPerSlide, setItemsPerSlide] = useState(3);
 
-  const getVisibleProjects = () => {
-    const start = current * itemsPerSlide;
-    return projects.slice(start, start + itemsPerSlide);
-  };
 
-  const prevSlide = () => {
-    setCurrent(prev => prev === 0 ? Math.floor(projects.length / itemsPerSlide) - 1 : prev - 1);
-  };
+  const totalSlides = Math.ceil(projects.length / itemsPerSlide);
 
-  const nextSlide = () => {
-    setCurrent(prev => prev === Math.floor(projects.length / itemsPerSlide) - 1 ? 0 : prev + 1);
-  };
+const getVisibleProjects = () => {
+  const start = current * itemsPerSlide;
+  return projects.slice(start, start + itemsPerSlide);
+};
+
+
+ const prevSlide = () => {
+  setCurrent(prev => (prev === 0 ? totalSlides - 1 : prev - 1));
+};
+
+const nextSlide = () => {
+  setCurrent(prev => (prev === totalSlides - 1 ? 0 : prev + 1));
+};
+useEffect(() => {
+  if (current >= totalSlides) {
+    setCurrent(0);
+  }
+}, [itemsPerSlide, totalSlides]);
+
+
 
   useEffect(() => {
     const interval = setInterval(nextSlide, 5000);
@@ -64,80 +93,101 @@ export function ProjectsSection() {
   }, [current]);
 
   return (
-    <motion.section
-      id="projects"
-      className="relative py-20 bg-black px-6 md:px-16 overflow-hidden"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+   <motion.section
+    className="bg-black py-20 px-4 md:px-10"
+    initial={{ opacity: 1 }}
+    whileInView={{ opacity: 1 }}
+  >
+    {/* --- Section Title --- */}
+    <motion.h2
+      className="text-4xl md:text-5xl font-extrabold text-center text-white mb-10"
+      initial={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
     >
-      {/* --- Animated Background --- */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <motion.div className="absolute w-72 h-72 rounded-full bg-white/20 blur-3xl"
-          animate={{ x: [0, 100, -80, 0], y: [0, -50, 60, 0] }} transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }} />
-        <motion.div className="absolute top-40 right-0 w-80 h-80 rounded-full bg-purple-500/20 blur-3xl"
-          animate={{ x: [0, -120, 80, 0], y: [0, 40, -60, 0] }} transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }} />
-        <motion.div className="absolute bottom-0 left-10 w-64 h-64 rounded-full bg-yellow-400/20 blur-3xl"
-          animate={{ x: [0, 70, -50, 0], y: [0, -60, 40, 0] }} transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }} />
-      </div>
+      My <span className="text-zinc-300">Projects</span>
+    </motion.h2>
 
-      {/* --- Section Title --- */}
-      <motion.h2
-        className="text-4xl md:text-5xl font-extrabold text-center text-white mb-12"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+    {/* --- Carousel Wrapper --- */}
+    <div className="relative max-w-6xl mx-auto">
+      {/* Left Arrow */}
+      <button
+        onClick={prevSlide}
+        className="absolute -left-6 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-3 rounded-full z-30 hover:bg-white hover:text-black transition"
       >
-        My <span className="text-white">Projects</span>
-      </motion.h2>
+        <FaChevronLeft />
+      </button>
 
-      {/* --- Carousel --- */}
-      <div className="relative flex items-center justify-center">
-        <button onClick={prevSlide} className="absolute left-0 bg-black/40 text-white p-3 rounded-full z-30 transition-colors duration-300 hover:bg-[#CEAE7B] hover:text-black">
-          <FaChevronLeft />
-        </button>
+      {/* Slides */}
+      <div className="overflow-hidden">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, x: 80 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -80 }}
+          transition={{ duration: 0.35 }}
+          className="flex justify-center gap-4"
+        >
+          {getVisibleProjects().map(project => (
+            <div
+              key={project.id}
+              className="w-full max-w-[320px] h-[420px] bg-zinc-900 rounded-xl text-white shadow-md flex flex-col overflow-hidden"
+            >
 
-        <div className="overflow-hidden w-full">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.4 }}
-            className="flex justify-center gap-6"
-          >
-            {getVisibleProjects().map(project => (
-              <div key={project.id} className="w-[350px] bg-zinc-900 rounded-lg text-zinc-50 shadow-lg flex flex-col">
-                <div className="w-full h-48 rounded-t-lg overflow-hidden">
-                  <Image src={project.img} alt={project.title} layout="responsive" width={500} height={300} className="object-cover w-full h-full" />
-                </div>
-                <div className="p-4 flex flex-col flex-grow">
-                  <h3 className="font-semibold text-lg">{project.title}</h3>
-                  <p className="text-zinc-400 text-sm break-words text-justify">{project.description}</p>
-                  <button
-                    onClick={() => setSelectedProject(project)}
-                    className="mt-auto relative overflow-hidden border border-white text-white font-semibold py-1 px-3 rounded group"
-                  >
-                    <span className="relative z-10 transition-colors duration-300 group-hover:text-black">Explore</span>
-                    <span className="absolute inset-0 bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out"></span>
-                  </button>
-                </div>
+              <div className="h-44 w-full overflow-hidden shrink-0">
+                <Image
+                  src={project.img}
+                  alt={project.title}
+                  width={500}
+                  height={300}
+                  className="object-cover w-full h-full"
+                />
               </div>
-            ))}
-          </motion.div>
-        </div>
 
-        <button onClick={nextSlide} className="absolute right-0 bg-black/40 text-white p-3 rounded-full z-30 transition-colors duration-300 hover:bg-white hover:text-black">
-          <FaChevronRight />
-        </button>
+              <div className="p-4 flex flex-col flex-grow">
+                <h3 className="font-semibold text-lg mb-1">
+                  {project.title}
+                </h3>
+
+                <p className="text-zinc-400 text-sm leading-relaxed">
+                  {project.description}
+                </p>
+
+                {/* Full-width button */}
+                <button
+                  onClick={() => setSelectedProject(project)}
+                  className="mt-auto w-full border border-zinc-500 text-white text-sm py-2 rounded-lg
+                            hover:bg-white hover:text-black transition"
+                >
+                  Explore
+                </button>
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </div>
 
-      {/* --- Dots --- */}
-      <div className="flex justify-center mt-4 gap-2">
-        {Array.from({ length: Math.ceil(projects.length / itemsPerSlide) }).map((_, index) => (
-          <button key={index} onClick={() => setCurrent(index)} className={`w-3 h-3 rounded-full ${index === current ? "bg-white" : "bg-zinc-600"} transition`} />
-        ))}
-      </div>
+      {/* Right Arrow */}
+      <button
+        onClick={nextSlide}
+        className="absolute -right-6 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-3 rounded-full z-30 hover:bg-white hover:text-black transition"
+      >
+        <FaChevronRight />
+      </button>
+    </div>
+
+  {/* --- Dots --- */}
+  <div className="flex justify-center mt-6 gap-2">
+    {Array.from({ length: totalSlides }).map((_, index) => (
+      <button
+        key={index}
+        onClick={() => setCurrent(index)}
+        className={`w-2.5 h-2.5 rounded-full transition ${
+          index === current ? "bg-white" : "bg-zinc-600"
+        }`}
+      />
+    ))}
+  </div>
 
       {/* --- Modal --- */}
       <AnimatePresence>
