@@ -1,220 +1,148 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-// ✅ TypeScript type for projects
+const techColorMap: Record<string, string> = {
+  "React": "bg-cyan-500/10 text-cyan-300 border-cyan-500/30",
+  "HTML": "bg-orange-500/10 text-orange-300 border-orange-500/30",
+  "CSS": "bg-blue-500/10 text-blue-300 border-blue-500/30",
+  "JavaScript": "bg-yellow-500/10 text-yellow-300 border-yellow-500/30",
+  "Bootstrap": "bg-indigo-500/10 text-indigo-300 border-indigo-500/30",
+  "Tailwind CSS": "bg-teal-500/10 text-teal-300 border-teal-500/30",
+  "C#": "bg-violet-500/10 text-violet-300 border-violet-500/30",
+  "Java": "bg-red-500/10 text-red-300 border-red-500/30",
+  "PHP": "bg-fuchsia-500/10 text-fuchsia-300 border-fuchsia-500/30",
+  "ASP.NET": "bg-purple-500/10 text-purple-300 border-purple-500/30",
+  "ASP.NET MVC": "bg-purple-600/10 text-purple-300 border-purple-600/30",
+  "ASP.NET Core API": "bg-purple-700/10 text-purple-300 border-purple-700/30",
+  "Java Swing": "bg-rose-500/10 text-rose-300 border-rose-500/30",
+  "MS SQL": "bg-emerald-500/10 text-emerald-300 border-emerald-500/30",
+  "MySQL": "bg-sky-500/10 text-sky-300 border-sky-500/30",
+  "MySQL / MariaDB": "bg-sky-600/10 text-sky-300 border-sky-600/30",
+  "Entity Framework": "bg-lime-500/10 text-lime-300 border-lime-500/30",
+  "WordPress": "bg-blue-600/10 text-blue-300 border-blue-600/30",
+  "Python": "bg-amber-500/10 text-amber-300 border-amber-500/30",
+  "AI / ML": "bg-pink-500/10 text-pink-300 border-pink-500/30",
+};
+
 type Project = {
   id: number;
   title: string;
   description: string;
   img: string | StaticImageData;
-  type?: string;
-  media?: string;
+  stack: string[];
+  category: "Personal" | "School" | "Work" | "Thesis";
 };
 
 export function ProjectsSection() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [current, setCurrent] = useState(0);
-
-  // Images from public folder
-  const Sinematics = "/Sinematics.png";
-  const Signscope = "/Signscope.png";
-  const EastCityHotel = "/EastCityHotel.png";
-  const MTFormsLogo = "/MTFormsLogo.png";
-  const LifeStyleTravel = "/LifeStyleTravel.png";
-  const CDV = "/CDV.png";
-
-  useEffect(() => {
-  const updateItemsPerSlide = () => {
-    if (window.innerWidth < 640) {
-      setItemsPerSlide(1); // mobile
-    } else if (window.innerWidth < 1024) {
-      setItemsPerSlide(2); // tablet
-    } else {
-      setItemsPerSlide(3); // desktop
-    }
-  };
-
-  updateItemsPerSlide();
-  window.addEventListener("resize", updateItemsPerSlide);
-
-  return () => window.removeEventListener("resize", updateItemsPerSlide);
-}, []);
-
-
-  const projects: Project[] = [
-    {
-      id: 1,
-      title: "VTA HOAMS",
-      description: "Homeowners Association Management System for Villa Teresita Alisasis. Manages member records, monthly dues, and HOA operations efficiently.",
-      img: Sinematics,
-    },
-    { id: 2, title: "Sinematics", description: "Kiosk ticket booking system built in Java with MySQL.", img: Sinematics },
-    { id: 3, title: "East City Hotel", description: "Hotel management system including booking and billing.", img: EastCityHotel },
-    { id: 4, title: "SignScope", description: "Education system for learning sign language interactively.", img: Signscope },
-    { id: 5, title: "MT Online Forms", description: "Digitizes purchase orders and payment requests for Manila Teachers.", img: MTFormsLogo },
-    { id: 6, title: "CDV Management System", description: "Streamlines voucher approvals and payments.", img: CDV },
-    { id: 7, title: "LifeStyle Travel Website", description: "Advertising website showcasing travel deals.", img: LifeStyleTravel },
-  ];
-
   const [itemsPerSlide, setItemsPerSlide] = useState(3);
 
+  const projects: Project[] = [
+    { id: 1, title: "VTA HOAMS", description: "Homeowners Association Management System...", img: "/Sinematics.png", stack: ["C#", "JavaScript", "Tailwind CSS", "ASP.NET Core API", "Entity Framework", "MS SQL"], category: "Personal" },
+    { id: 2, title: "Sinematics", description: "Cinema ticket booking kiosk system...", img: "/Sinematics.png", stack: ["Java", "Java Swing", "MySQL / MariaDB"], category: "School" },
+    { id: 3, title: "East City Hotel", description: "Hotel reservation and management system...", img: "/EastCityHotel.png", stack: ["Java", "Java Swing", "MySQL / MariaDB"], category: "School" },
+    { id: 4, title: "SignScope", description: "Thesis project focused on interactive sign language learning...", img: "/Signscope.png", stack: ["Java", "Python", "AI / ML"], category: "Thesis" },
+    { id: 5, title: "MT Online Forms", description: "Paperless system for processing purchase requisitions...", img: "/MTFormsLogo.png", stack: ["C#", "JavaScript", "Bootstrap", "ASP.NET MVC", "MS SQL"], category: "Work" },
+    { id: 6, title: "CDV Management System", description: "Centralized system connected to MT Online Forms...", img: "/CDV.png", stack: ["C#", "JavaScript", "Bootstrap", "ASP.NET MVC", "MS SQL"], category: "Work" },
+    { id: 7, title: "Lifestyle Travel Website", description: "Advertising website showcasing travel packages...", img: "/LifeStyleTravel.png", stack: ["WordPress", "HTML", "CSS"], category: "Work" },
+  ];
 
-  const totalSlides = Math.ceil(projects.length / itemsPerSlide);
-
-const getVisibleProjects = () => {
-  const start = current * itemsPerSlide;
-  return projects.slice(start, start + itemsPerSlide);
-};
-
-
- const prevSlide = () => {
-  setCurrent(prev => (prev === 0 ? totalSlides - 1 : prev - 1));
-};
-
-const nextSlide = () => {
-  setCurrent(prev => (prev === totalSlides - 1 ? 0 : prev + 1));
-};
-useEffect(() => {
-  if (current >= totalSlides) {
-    setCurrent(0);
-  }
-}, [itemsPerSlide, totalSlides]);
-
-
-
+  // Responsiveness
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
-    return () => clearInterval(interval);
-  }, [current]);
+    const updateItemsPerSlide = () => {
+      if (window.innerWidth < 640) setItemsPerSlide(1);
+      else if (window.innerWidth < 1024) setItemsPerSlide(2);
+      else setItemsPerSlide(3);
+    };
+    updateItemsPerSlide();
+    window.addEventListener("resize", updateItemsPerSlide);
+    return () => window.removeEventListener("resize", updateItemsPerSlide);
+  }, []);
+
+  const totalSlides = projects.length - itemsPerSlide + 1;
+  const prevSlide = () => setCurrent(prev => (prev === 0 ? totalSlides - 1 : prev - 1));
+  const nextSlide = () => setCurrent(prev => (prev === totalSlides - 1 ? 0 : prev + 1));
+
+  useEffect(() => { if (current >= totalSlides) setCurrent(0); }, [itemsPerSlide, totalSlides]);
+  useEffect(() => { const interval = setInterval(nextSlide, 5000); return () => clearInterval(interval); }, [current]);
+
+  // Card variants
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.4, ease: "easeIn" } },
+  };
+
+  const containerVariants: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.15 } },
+  };
 
   return (
-   <motion.section
-    className="bg-black py-20 px-4 md:px-10"
-    initial={{ opacity: 1 }}
-    whileInView={{ opacity: 1 }}
-  >
-    {/* --- Section Title --- */}
-    <motion.h2
-      className="text-4xl md:text-5xl font-extrabold text-center text-white mb-10"
-      initial={{ opacity: 0, y: -20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      My <span className="text-zinc-300">Projects</span>
-    </motion.h2>
-
-    {/* --- Carousel Wrapper --- */}
-    <div className="relative max-w-6xl mx-auto">
-      {/* Left Arrow */}
-      <button
-        onClick={prevSlide}
-        className="absolute -left-6 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-3 rounded-full z-30 hover:bg-white hover:text-black transition"
+    <section className="bg-black py-20 px-4 md:px-10 overflow-hidden">
+      <motion.h2
+        className="text-4xl md:text-5xl font-extrabold text-center text-white mb-10"
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: false, amount: 0.3 }}
       >
-        <FaChevronLeft />
-      </button>
+        My <span className="text-zinc-300">Projects</span>
+      </motion.h2>
 
-      {/* Slides */}
-      <div className="overflow-hidden">
-        <motion.div
-          key={current}
-          initial={{ opacity: 0, x: 80 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -80 }}
-          transition={{ duration: 0.35 }}
-          className="flex justify-center gap-4"
-        >
-          {getVisibleProjects().map(project => (
-            <div
-              key={project.id}
-              className="w-full max-w-[320px] h-[420px] bg-zinc-900 rounded-xl text-white shadow-md flex flex-col overflow-hidden"
-            >
-
-              <div className="h-44 w-full overflow-hidden shrink-0">
-                <Image
-                  src={project.img}
-                  alt={project.title}
-                  width={500}
-                  height={300}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-
-              <div className="p-4 flex flex-col flex-grow">
-                <h3 className="font-semibold text-lg mb-1">
-                  {project.title}
-                </h3>
-
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Full-width button */}
-                <button
-                  onClick={() => setSelectedProject(project)}
-                  className="mt-auto w-full border border-zinc-500 text-white text-sm py-2 rounded-lg
-                            hover:bg-white hover:text-black transition"
-                >
-                  Explore
-                </button>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Right Arrow */}
-      <button
-        onClick={nextSlide}
-        className="absolute -right-6 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-3 rounded-full z-30 hover:bg-white hover:text-black transition"
+      {/* Carousel Container */}
+      <motion.div
+        className="relative max-w-6xl mx-auto flex justify-center items-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.3 }}
+        variants={containerVariants}
       >
-        <FaChevronRight />
-      </button>
-    </div>
+        {/* Navigation */}
+        <button onClick={prevSlide} className="absolute left-[-20px] md:left-0 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-2 md:p-3 rounded-full z-30 hover:bg-white hover:text-black transition shadow-lg">
+          <FaChevronLeft />
+        </button>
+        <button onClick={nextSlide} className="absolute right-[-20px] md:right-0 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-2 md:p-3 rounded-full z-30 hover:bg-white hover:text-black transition shadow-lg">
+          <FaChevronRight />
+        </button>
 
-  {/* --- Dots --- */}
-  <div className="flex justify-center mt-6 gap-2">
-    {Array.from({ length: totalSlides }).map((_, index) => (
-      <button
-        key={index}
-        onClick={() => setCurrent(index)}
-        className={`w-2.5 h-2.5 rounded-full transition ${
-          index === current ? "bg-white" : "bg-zinc-600"
-        }`}
-      />
-    ))}
-  </div>
+        {/* Carousel Cards */}
+        <div className="flex gap-6 md:gap-8 justify-center">
+          <AnimatePresence initial={false} mode="popLayout">
+            {projects.slice(current, current + itemsPerSlide).map((project) => (
+              <motion.div
+                key={project.id}
+                className="flex-shrink-0 w-full sm:w-[280px] md:w-[320px] h-[460px] bg-zinc-900 rounded-3xl border border-zinc-800 text-white shadow-xl hover:border-zinc-600 transition flex flex-col overflow-hidden"
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                exit="exit"
+                viewport={{ once: false, amount: 0.3 }} // triggers every time
+              >
+                <div className="relative h-48 w-full overflow-hidden rounded-t-3xl">
+                  <Image src={project.img} alt={project.title} width={500} height={300} className="object-cover w-full h-full" />
+                  <span className="absolute top-3 right-3 text-xs px-3 py-1 rounded-full bg-black/70 backdrop-blur border border-zinc-700">{project.category}</span>
+                </div>
 
-      {/* --- Modal --- */}
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div
-            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedProject(null)}
-          >
-            <motion.div
-              className="bg-zinc-900/20 backdrop-blur-md rounded-[100px] max-w-3xl w-full overflow-hidden"
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {selectedProject.type === "video" ? (
-                <video src={selectedProject.media} controls autoPlay className="w-full h-auto" />
-              ) : (
-                <img src={selectedProject.media || (selectedProject.img as string)} alt={selectedProject.title} className="w-full h-auto" />
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.section>
+                <div className="p-5 flex flex-col flex-grow gap-3">
+                  <h3 className="font-semibold text-lg md:text-xl">{project.title}</h3>
+                  <p className="text-zinc-400 text-sm md:text-base line-clamp-3">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {project.stack.map((tech, i) => (
+                      <span key={i} className={`text-xs md:text-sm px-2.5 py-1 rounded-md border ${techColorMap[tech] ?? "bg-zinc-800 text-zinc-300 border-zinc-700"}`}>{tech}</span>
+                    ))}
+                  </div>
+                  <button className="mt-auto w-full text-sm md:text-base py-2 rounded-xl border border-zinc-600 hover:bg-white hover:text-black transition font-medium">View Details</button>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    </section>
   );
 }
