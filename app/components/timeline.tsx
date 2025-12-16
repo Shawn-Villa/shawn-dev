@@ -49,7 +49,7 @@ export function Timeline() {
   return (
     <section
       id="roadmap"
-      className="py-16 bg-black px-6 md:px-16 relative overflow-hidden"
+      className="py-16 bg-black/90 px-6 md:px-16 relative overflow-hidden"
     >
       <motion.h2
         initial={{ opacity: 0, y: -20 }}

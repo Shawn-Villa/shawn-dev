@@ -8,7 +8,7 @@ export function AboutSection() {
     <section
       id="about"
        className="min-h-[50vh] py-24 px-6 md:px-20
-             bg-[#F8F8F8]/20 rounded-t-2xl
+             bg-[#F8F8F8]/75 rounded-t-2xl
              flex items-center justify-center
              overflow-x-hidden"
     >

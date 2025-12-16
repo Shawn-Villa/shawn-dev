@@ -22,7 +22,7 @@ export default function Skills() {
 
       <section
   id="skills"
-  className="w-full bg-black py-20 px-6 overflow-x-hidden"
+  className="w-full bg-black/90 py-20 px-6 overflow-x-hidden"
 >
   <motion.h2
       className="text-4xl md:text-5xl font-extrabold text-center text-white mb-10"

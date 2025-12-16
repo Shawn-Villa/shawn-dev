@@ -5,17 +5,19 @@ import Hero from "./components/hero";
 import { Timeline } from "./components/timeline";
 import { ContactSection } from "./components/contacts";
 import { ProjectsSection } from "./components/projects";
-import  Skills  from "./components/skills";
+import Skills from "./components/skills";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <Hero />
-      <AboutSection />
-      <Skills />
-      <ProjectsSection />
-      <Timeline/>
-      <ContactSection/>
+      <div className="bg-cover bg-center" style={{ backgroundImage: "url('/shawn-dev-bg.png')", opacity: 0.9 }}>
+        <AboutSection />
+        <Skills />
+        <ProjectsSection />
+        <Timeline />
+        <ContactSection />
+      </div>
     </div>
   );
 }
