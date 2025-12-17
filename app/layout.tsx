@@ -15,9 +15,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "shawn.dev",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.ico", 
+  },
+  openGraph: {
+    images: [
+      {
+        url: "/favicon.ico", // Path to the image you want to display
+        alt: "Shawn Villa Portfolio", // Alt text for accessibility
+      },
+    ],
   },
 };
+
 
 export default function RootLayout({
   children,
