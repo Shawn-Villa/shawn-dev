@@ -123,7 +123,7 @@ export function ProjectsSection() {
           {projects.slice(current, current + itemsPerSlide).map(project => (
             <div
               key={project.id}
-              className="flex-shrink-0 w-full sm:w-[280px] md:w-[320px] h-[460px] bg-zinc-900 rounded-3xl border border-zinc-800 text-white shadow-xl hover:border-zinc-600 transition flex flex-col overflow-hidden"
+              className="flex-shrink-0 w-[320px] h-[460px] bg-zinc-900 rounded-3xl border border-zinc-800 text-white shadow-xl hover:border-zinc-600 transition flex flex-col overflow-hidden"
             >
               <div className="relative h-48 w-full overflow-hidden rounded-t-3xl">
                 <Image

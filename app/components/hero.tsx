@@ -1,11 +1,27 @@
-"use client";
+'use client';
 
 import ProfileCard from "@/src/component/ProfileCard";
 import LightRays from "@/src/component/LightRays";
 import { motion } from "framer-motion";
-import { FaArrowDown } from "react-icons/fa"; // Import the down arrow icon
+import { FaArrowDown } from "react-icons/fa";
 
 export default function Hero() {
+  // Scroll to About section
+  const scrollToAbout = () => {
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Scroll to Contact section
+  const scrollToContact = () => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center bg-black overflow-hidden">
 
@@ -36,7 +52,7 @@ export default function Hero() {
           miniAvatarUrl="/me-icon.jpg"
           behindGradient="radial-gradient(circle, rgba(255,255,255,0.25), rgba(0,0,0,0.05))"
           innerGradient="linear-gradient(to bottom right, rgba(0,0,0,0.55), rgba(0,0,0,0.95))"
-          onContactClick={() => alert('Contact clicked!')}
+          onContactClick={scrollToContact} 
           name="Shawn Villa"
           title="Full-Stack Developer"
           handle="shawnyyqt"
@@ -44,13 +60,15 @@ export default function Hero() {
         />
       </motion.div>
 
-       {/* Rectangular Card with Bulging Arrow Down */}
-       <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center items-center">
-         {/* Card Wrapper */}
-         <div className="bg-white p-6 px-20 rounded-t-md flex justify-center items-center">
-           <FaArrowDown className="text-black text-4xl" /> {/* Using the icon */}
-         </div>
-       </div>
+      {/* Rectangular Card with Arrow Down */}
+      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex justify-center items-center z-20 cursor-pointer"
+           onClick={scrollToAbout} // <-- scroll handler for About section
+      >
+        <div className="bg-white p-6 px-12 rounded-t-md flex justify-center items-center">
+          <FaArrowDown className="text-black text-4xl animate-bounce" />
+        </div>
+      </div>
+
     </section>
   );
 }
