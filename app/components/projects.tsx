@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
@@ -51,7 +51,9 @@ export function ProjectsSection() {
     { id: 7, title: "Lifestyle Travel Website", description: "Advertising website showcasing travel packages...", img: "/LifeStyleTravel.png", stack: ["WordPress", "HTML", "CSS"], category: "Work" },
   ];
 
-  // Responsiveness
+  /* =====================
+     RESPONSIVENESS
+  ===================== */
   useEffect(() => {
     const updateItemsPerSlide = () => {
       if (window.innerWidth < 640) setItemsPerSlide(1);
@@ -67,20 +69,14 @@ export function ProjectsSection() {
   const prevSlide = () => setCurrent(prev => (prev === 0 ? totalSlides - 1 : prev - 1));
   const nextSlide = () => setCurrent(prev => (prev === totalSlides - 1 ? 0 : prev + 1));
 
-  useEffect(() => { if (current >= totalSlides) setCurrent(0); }, [itemsPerSlide, totalSlides]);
-  useEffect(() => { const interval = setInterval(nextSlide, 5000); return () => clearInterval(interval); }, [current]);
+  useEffect(() => {
+    if (current >= totalSlides) setCurrent(0);
+  }, [itemsPerSlide, totalSlides]);
 
-  // Card variants
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    exit: { opacity: 0, y: -20, transition: { duration: 0.4, ease: "easeIn" } },
-  };
-
-  const containerVariants: Variants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.15 } },
-  };
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, [current]);
 
   return (
     <section className="bg-black py-20 px-4 md:px-10 overflow-hidden">
@@ -94,54 +90,80 @@ export function ProjectsSection() {
         My <span className="text-zinc-300">Projects</span>
       </motion.h2>
 
-      {/* Carousel Container */}
       <motion.div
         className="relative max-w-6xl mx-auto flex justify-center items-center"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.3 }}
-        variants={containerVariants}
       >
-        {/* Navigation */}
-        <button onClick={prevSlide} className="absolute left-[-20px] md:left-0 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-2 md:p-3 rounded-full z-30 hover:bg-white hover:text-black transition shadow-lg">
+        {/* Arrows */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-[-20px] md:left-0 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-2 md:p-3 rounded-full z-30 hover:bg-white hover:text-black transition shadow-lg"
+        >
           <FaChevronLeft />
         </button>
-        <button onClick={nextSlide} className="absolute right-[-20px] md:right-0 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-2 md:p-3 rounded-full z-30 hover:bg-white hover:text-black transition shadow-lg">
+
+        <button
+          onClick={nextSlide}
+          className="absolute right-[-20px] md:right-0 top-1/2 -translate-y-1/2 bg-zinc-800/70 text-white p-2 md:p-3 rounded-full z-30 hover:bg-white hover:text-black transition shadow-lg"
+        >
           <FaChevronRight />
         </button>
 
-        {/* Carousel Cards */}
-        <div className="flex gap-6 md:gap-8 justify-center">
-          <AnimatePresence initial={false} mode="popLayout">
-            {projects.slice(current, current + itemsPerSlide).map((project) => (
-              <motion.div
-                key={project.id}
-                className="flex-shrink-0 w-full sm:w-[280px] md:w-[320px] h-[460px] bg-zinc-900 rounded-3xl border border-zinc-800 text-white shadow-xl hover:border-zinc-600 transition flex flex-col overflow-hidden"
-                variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                exit="exit"
-                viewport={{ once: false, amount: 0.3 }} // triggers every time
-              >
-                <div className="relative h-48 w-full overflow-hidden rounded-t-3xl">
-                  <Image src={project.img} alt={project.title} width={500} height={300} className="object-cover w-full h-full" />
-                  <span className="absolute top-3 right-3 text-xs px-3 py-1 rounded-full bg-black/70 backdrop-blur border border-zinc-700">{project.category}</span>
+        {/* Cards Wrapper with drag-in effect */}
+        <motion.div
+          key={current} // triggers animation every slide
+          className="flex gap-6 md:gap-8 justify-center"
+          initial={{ x: 40 }}
+          animate={{ x: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 120,
+            damping: 18,
+          }}
+        >
+          {projects.slice(current, current + itemsPerSlide).map(project => (
+            <div
+              key={project.id}
+              className="flex-shrink-0 w-full sm:w-[280px] md:w-[320px] h-[460px] bg-zinc-900 rounded-3xl border border-zinc-800 text-white shadow-xl hover:border-zinc-600 transition flex flex-col overflow-hidden"
+            >
+              <div className="relative h-48 w-full overflow-hidden rounded-t-3xl">
+                <Image
+                  src={project.img}
+                  alt={project.title}
+                  width={500}
+                  height={300}
+                  className="object-cover w-full h-full"
+                />
+                <span className="absolute top-3 right-3 text-xs px-3 py-1 rounded-full bg-black/70 backdrop-blur border border-zinc-700">
+                  {project.category}
+                </span>
+              </div>
+
+              <div className="p-5 flex flex-col flex-grow gap-3">
+                <h3 className="font-semibold text-lg md:text-xl">{project.title}</h3>
+                <p className="text-zinc-400 text-sm md:text-base line-clamp-3">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {project.stack.map((tech, i) => (
+                    <span
+                      key={i}
+                      className={`text-xs md:text-sm px-2.5 py-1 rounded-md border ${
+                        techColorMap[tech] ?? "bg-zinc-800 text-zinc-300 border-zinc-700"
+                      }`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
 
-                <div className="p-5 flex flex-col flex-grow gap-3">
-                  <h3 className="font-semibold text-lg md:text-xl">{project.title}</h3>
-                  <p className="text-zinc-400 text-sm md:text-base line-clamp-3">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mt-1">
-                    {project.stack.map((tech, i) => (
-                      <span key={i} className={`text-xs md:text-sm px-2.5 py-1 rounded-md border ${techColorMap[tech] ?? "bg-zinc-800 text-zinc-300 border-zinc-700"}`}>{tech}</span>
-                    ))}
-                  </div>
-                  <button className="mt-auto w-full text-sm md:text-base py-2 rounded-xl border border-zinc-600 hover:bg-white hover:text-black transition font-medium">View Details</button>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+                <button className="mt-auto w-full text-sm md:text-base py-2 rounded-xl border border-zinc-600 hover:bg-white hover:text-black transition font-medium">
+                  View Details
+                </button>
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </motion.div>
     </section>
   );

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FaGraduationCap, FaLaptopCode } from "react-icons/fa";
 import Image from 'next/image';
 import UELogo from "@/public/UELogo.png";
+import lifeStyle from "@/public/lifestyle-travel-logo.png";
 import MTLogo from "@/public/Manila_Teachers_Partylist.png";
 
 export function Timeline() {
@@ -33,7 +34,7 @@ export function Timeline() {
       description: "",
       icon: <FaLaptopCode />,
       color: "from-yellow-600 to-yellow-400",
-      image: "/images/Image-Placeholder.png",
+      image: lifeStyle,
     },
     {
       year: "2024–Present",
