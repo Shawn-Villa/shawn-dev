@@ -49,7 +49,7 @@ export function Timeline() {
 
   return (
     <section
-      id="roadmap"
+      id="timeline"
       className="py-16 bg-black/90 px-6 md:px-16 relative overflow-hidden"
     >
       <motion.h2

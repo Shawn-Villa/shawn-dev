@@ -1,5 +1,6 @@
 'use client';
 
+import Navbar from './components/navbar';
 import { AboutSection } from "./components/about";
 import Hero from "./components/hero";
 import { Timeline } from "./components/timeline";
@@ -10,6 +11,7 @@ import Skills from "./components/skills";
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
+      <Navbar />
       <Hero />
       <div className="bg-cover bg-center" style={{ backgroundImage: "url('/shawn-dev-bg.png')", opacity: 0.9 }}>
         <AboutSection />

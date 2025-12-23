@@ -144,7 +144,7 @@ Developed in WordPress, it serves as a promotional platform for the agency.`,
   };
 
   return (
-    <section className="bg-black py-20 px-4 overflow-hidden">
+    <section id="projects" className="bg-black py-20 px-4 overflow-hidden">
       <motion.h2
         className="text-4xl font-extrabold text-center text-white mb-12"
         initial={{ opacity: 0, y: -20 }}
