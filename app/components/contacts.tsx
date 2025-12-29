@@ -15,13 +15,13 @@ export function ContactSection() {
       icon: <FaGithub />,
       title: "GitHub",
       value: "github.com/ShawnVilla",
-      href: "https://github.com/ShawnVilla",
+      href: "https://github.com/Shawn-Villa",
     },
     {
       icon: <FaLinkedin />,
       title: "LinkedIn",
       value: "linkedin.com/in/shawnvilla",
-      href: "https://linkedin.com/in/shawnvilla",
+      href: "https://www.linkedin.com/in/shawn-rovic-villa-208850326/",
     },
   ];
 

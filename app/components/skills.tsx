@@ -68,7 +68,7 @@ export default function Skills() {
                     JavaScript Ecosystem:
                   </span>
                   <div className="text-center text-zinc-400 group-hover:text-black transition">
-                    React (Vite/Next), React Native, Node, API
+                    JavaScript, TypeScript, React (Vite/Next), React Native, Node.js
                   </div>
                 </li>
                 <li>
@@ -76,7 +76,7 @@ export default function Skills() {
                     Microsoft Stack:
                   </span>
                   <div className="text-center text-zinc-400 group-hover:text-black transition">
-                    C#, ASP.NET, SQL (MSSQL)
+                    C#, ASP.NET, LINQ
                   </div>
                 </li>
                 <li>
@@ -84,7 +84,7 @@ export default function Skills() {
                     Other Languages:
                   </span>
                   <div className="text-center text-zinc-400 group-hover:text-black transition">
-                    Java, MySQL
+                    Java, Python, C++
                   </div>
                 </li>
               </ul>
@@ -128,7 +128,7 @@ export default function Skills() {
                     Database & API Tools:
                   </span>
                   <div className="text-center text-zinc-400 group-hover:text-black transition">
-                    SSMS, Postman
+                    SQL Server(MSSQL), MySql, REST, Postman
                   </div>
                 </li>
                 <li>

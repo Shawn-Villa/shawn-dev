@@ -48,9 +48,7 @@ export function ProjectsSection() {
     {
       id: 1,
       title: "VTA HOAMS",
-      description: `VTA HOAMS is a management system for Villa Teresita Homeowners Association. 
-It tracks monthly dues, manages announcements, member information, and lots. 
-Frontend: React.js | Backend: ASP.NET Core API + Entity Framework | Database: MS SQL.`,
+      description: `VTA HOAMS is a management system for the Villa Teresita Homeowners Association. It helps track monthly dues, manage announcements, store member details, and organize property lots.`,
       images: ["/Sinematics.png", "/CDV.png", "/CDV.png", "/CDV.png", "/CDV.png"],
       stack: ["C#", "JavaScript", "Tailwind CSS", "ASP.NET Core API", "Entity Framework", "MS SQL"],
       category: "Personal"
@@ -58,9 +56,7 @@ Frontend: React.js | Backend: ASP.NET Core API + Entity Framework | Database: MS
     {
       id: 2,
       title: "Sinematics",
-      description: `Sinematics is a kiosk-style cinema ticket booking system. 
-It allows users to select and order tickets for movies. 
-Developed with Java Windows Forms and connected to MySQL/MariaDB.`,
+      description: `"Sinematics is a self-service kiosk-based cinema ticket booking system. It allows users to select and purchase movie tickets directly from the kiosk, eliminating the need to stand in line at a counter. The system supports quick payments using company-issued prepaid cards, similar to a beep card, which can be loaded directly at the counter. This streamlines transactions and minimizes the need for cashier assistance.`,
       images: ["/Sinematics.png"],
       stack: ["Java", "Java Swing", "MySQL / MariaDB"],
       category: "School"
@@ -68,9 +64,7 @@ Developed with Java Windows Forms and connected to MySQL/MariaDB.`,
     {
       id: 3,
       title: "East City Hotel",
-      description: `East City Hotel is a hotel reservation system. 
-Users can book rooms, while admins manage bookings, transactions, and room availability. 
-Built with Java and MySQL/MariaDB.`,
+      description: `East City Hotel is a hotel reservation system enabling users to book rooms and administrators to manage bookings, payments, and room availability.`,
       images: ["/EastCityHotel.png"],
       stack: ["Java", "Java Swing", "MySQL / MariaDB"],
       category: "School"
@@ -78,8 +72,7 @@ Built with Java and MySQL/MariaDB.`,
     {
       id: 4,
       title: "SignScope",
-      description: `SignScope is a thesis project combining an educational system (Java) with AI-powered features (Python). 
-It focuses on interactive learning and AI-assisted insights.`,
+      description: `SignScope is a thesis project that combines an interactive educational system for deaf, mute, and hearing users, built in Java and featuring quizzes, learning modules, and hands-on activities, with AI-powered features developed in Python. It focuses on inclusive, interactive learning and AI-assisted insights.`,
       images: ["/Signscope.png"],
       stack: ["Java", "Python", "AI / ML"],
       category: "Thesis"
@@ -87,8 +80,7 @@ It focuses on interactive learning and AI-assisted insights.`,
     {
       id: 5,
       title: "MT Online Forms",
-      description: `MT Online Forms digitizes the processing of purchase requisitions, purchase orders, and canvass sheets. 
-It reduces paper use and streamlines workflows. Built with ASP.NET MVC and MS SQL.`,
+      description: `MT Online Forms is a digital system that automates the processing of purchase requisitions, purchase orders, and canvass sheets, reducing paper usage and streamlining internal workflows.`,
       images: ["/MTFormsLogo.png"],
       stack: ["C#", "JavaScript", "Bootstrap", "ASP.NET MVC", "MS SQL"],
       category: "Work"
@@ -96,8 +88,7 @@ It reduces paper use and streamlines workflows. Built with ASP.NET MVC and MS SQ
     {
       id: 6,
       title: "CDV Management System",
-      description: `CDV Management System processes requests from branches and departments connected with MT Online Forms. 
-It handles approvals, accounting, and check releases. Built with ASP.NET MVC and MS SQL.`,
+      description: `The CDV Management System (Check Disbursement Voucher) processes requests from branches and departments integrated with MT Online Forms. It serves as the final stage of processing, handling voucher payables, check vouchers, and check releases.`,
       images: ["/CDV.png"],
       stack: ["C#", "JavaScript", "Bootstrap", "ASP.NET MVC", "MS SQL"],
       category: "Work"
@@ -105,8 +96,7 @@ It handles approvals, accounting, and check releases. Built with ASP.NET MVC and
     {
       id: 7,
       title: "Lifestyle Travel Website",
-      description: `Lifestyle Travel is an advertising website showcasing travel packages, itineraries, and pricing. 
-Developed in WordPress, it serves as a promotional platform for the agency.`,
+      description: `Lifestyle Travel is a WordPress-based advertising website that showcases travel packages, itineraries, and pricing, serving as a promotional platform for the travel agency.`,
       images: ["/LifeStyleTravel.png"],
       stack: ["WordPress", "HTML", "CSS"],
       category: "Work"
@@ -194,7 +184,7 @@ Developed in WordPress, it serves as a promotional platform for the agency.`,
 
               <div className="p-5 flex flex-col flex-grow gap-3">
                 <h3 className="font-semibold text-lg md:text-xl">{project.title}</h3>
-                <p className="text-zinc-400 text-sm md:text-base line-clamp-3 flex-grow">
+                <p className="text-zinc-400 text-sm md:text-base line-clamp-3">
                   {project.description}
                 </p>
 
