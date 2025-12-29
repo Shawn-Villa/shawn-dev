@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
+import MobileNav from './mobilenav';
 
 type Item = {
   label: string;
@@ -39,15 +40,26 @@ export default function PillNav({
   const pathname = usePathname();
   const resolvedPillTextColor = pillTextColor ?? baseColor;
 
+  const [isMobile, setIsMobile] = useState(false);
+
   const circleRefs = useRef<HTMLSpanElement[]>([]);
   const tlRefs = useRef<gsap.core.Timeline[]>([]);
   const activeTweenRefs = useRef<gsap.core.Tween[]>([]);
-  const logoImgRef = useRef<HTMLImageElement | null>(null);
   const logoRef = useRef<HTMLAnchorElement | null>(null);
   const navItemsRef = useRef<HTMLDivElement | null>(null);
 
-  /* ================= GSAP SETUP ================= */
+  /* ============ MOBILE CHECK ============ */
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  /* ============ GSAP SETUP (DESKTOP ONLY) ============ */
+  useEffect(() => {
+    if (isMobile) return;
+
     const layout = () => {
       circleRefs.current.forEach((circle, i) => {
         if (!circle || !circle.parentElement) return;
@@ -57,7 +69,9 @@ export default function PillNav({
 
         const R = ((w * w) / 4 + h * h) / (2 * h);
         const D = Math.ceil(2 * R) + 2;
-        const delta = Math.ceil(R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))) + 1;
+        const delta = Math.ceil(
+          R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))
+        ) + 1;
         const originY = D - delta;
 
         circle.style.width = `${D}px`;
@@ -104,21 +118,34 @@ export default function PillNav({
     }
 
     return () => window.removeEventListener('resize', layout);
-  }, [items, ease, initialLoadAnimation]);
+  }, [items, ease, initialLoadAnimation, isMobile]);
 
   const handleEnter = (i: number) => {
+    if (isMobile) return;
     const tl = tlRefs.current[i];
     if (!tl) return;
     activeTweenRefs.current[i]?.kill();
-    activeTweenRefs.current[i] = tl.tweenTo(tl.duration(), { duration: 0.3, ease });
+    activeTweenRefs.current[i] = tl.tweenTo(tl.duration(), {
+      duration: 0.3,
+      ease
+    });
   };
 
   const handleLeave = (i: number) => {
+    if (isMobile) return;
     const tl = tlRefs.current[i];
     if (!tl) return;
     activeTweenRefs.current[i]?.kill();
-    activeTweenRefs.current[i] = tl.tweenTo(0, { duration: 0.2, ease });
+    activeTweenRefs.current[i] = tl.tweenTo(0, {
+      duration: 0.2,
+      ease
+    });
   };
+
+  /* ============ MOBILE RENDER ============ */
+  if (isMobile) {
+    return <MobileNav logo={logo} items={items} />;
+  }
 
   const cssVars = {
     ['--base' as any]: baseColor,
@@ -127,12 +154,10 @@ export default function PillNav({
     ['--pill-text' as any]: resolvedPillTextColor
   };
 
+  /* ============ DESKTOP RENDER ============ */
   return (
     <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[1000] px-4">
-      <nav
-        className={`flex items-center ${className}`}
-        style={cssVars}
-      >
+      <nav className={`flex items-center ${className}`} style={cssVars}>
         {/* LOGO */}
         <Link
           href="/"
@@ -140,12 +165,7 @@ export default function PillNav({
           className="rounded-full p-2 flex items-center justify-center"
           style={{ background: 'var(--base)' }}
         >
-          <img
-            src={logo}
-            alt={logoAlt}
-            ref={logoImgRef}
-            className="w-8 h-8 object-cover"
-          />
+          <img src={logo} alt={logoAlt} className="w-8 h-8 object-cover" />
         </Link>
 
         {/* NAV */}
@@ -155,55 +175,39 @@ export default function PillNav({
           style={{ background: 'var(--base)' }}
         >
           <ul className="flex p-[3px] gap-[3px]">
-            {items.map((item, i) => {
-              const isActive =
-                item.href.startsWith('#') ? false : pathname === item.href;
-
-              return (
-                <li key={item.href} className="relative flex">
-                  <Link
-                    href={item.href}
-                    className="relative overflow-hidden inline-flex items-center justify-center rounded-full font-semibold uppercase text-[14px]"
-                    style={{
-                      background: 'var(--pill-bg)',
-                      color: 'var(--pill-text)',
-                      padding: '10px 18px'
+            {items.map((item, i) => (
+              <li key={item.href} className="relative flex">
+                <Link
+                  href={item.href}
+                  className="relative overflow-hidden inline-flex items-center justify-center rounded-full font-semibold uppercase text-[14px]"
+                  style={{
+                    background: 'var(--pill-bg)',
+                    color: 'var(--pill-text)',
+                    padding: '10px 18px'
+                  }}
+                  onMouseEnter={() => handleEnter(i)}
+                  onMouseLeave={() => handleLeave(i)}
+                >
+                  <span
+                    ref={el => {
+                      if (el) circleRefs.current[i] = el;
                     }}
-                    onMouseEnter={() => handleEnter(i)}
-                    onMouseLeave={() => handleLeave(i)}
-                  >
-                    {/* GSAP CIRCLE */}
+                    className="absolute left-1/2 bottom-0 rounded-full pointer-events-none"
+                    style={{ background: 'var(--base)' }}
+                  />
+
+                  <span className="relative z-10">
+                    <span className="pill-label block">{item.label}</span>
                     <span
-                      ref={el => {
-                        if (el) circleRefs.current[i] = el;
-                      }}
-                      className="absolute left-1/2 bottom-0 rounded-full pointer-events-none"
-                      style={{ background: 'var(--base)' }}
-                    />
-
-                    {/* LABELS */}
-                    <span className="relative z-10">
-                      <span className="pill-label block">
-                        {item.label}
-                      </span>
-                      <span
-                        className="pill-label-hover absolute left-0 top-0"
-                        style={{ color: 'var(--hover-text)' }}
-                      >
-                        {item.label}
-                      </span>
+                      className="pill-label-hover absolute left-0 top-0"
+                      style={{ color: 'var(--hover-text)' }}
+                    >
+                      {item.label}
                     </span>
-
-                    {isActive && (
-                      <span
-                        className="absolute left-1/2 -bottom-1 w-2 h-2 rounded-full -translate-x-1/2"
-                        style={{ background: 'var(--base)' }}
-                      />
-                    )}
-                  </Link>
-                </li>
-              );
-            })}
+                  </span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </nav>
