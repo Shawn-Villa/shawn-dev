@@ -88,7 +88,7 @@ export function ContactSection() {
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         <a
-          href="/ShawnVilla_CV.pdf" // <-- replace with your CV file path
+          href="/Villa, Shawn Rovic B. - CV.pdf" // <-- replace with your CV file path
           download
           className="flex items-center gap-3 px-8 py-4 bg-black border border-zinc-500
                      rounded-3xl font-semibold text-white hover:bg-zinc-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]

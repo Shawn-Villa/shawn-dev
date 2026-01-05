@@ -18,10 +18,9 @@ type Props = {
   items: Item[];
   className?: string;
   ease?: string;
-  baseColor?: string;
-  pillColor?: string;
-  hoveredPillTextColor?: string;
-  pillTextColor?: string;
+  baseColor?: string;         // single navbar/pill color
+  textColor?: string;         // normal text color
+  hoveredTextColor?: string;  // text color on hover
   initialLoadAnimation?: boolean;
 };
 
@@ -32,14 +31,11 @@ export default function PillNav({
   className = '',
   ease = 'power3.easeOut',
   baseColor = '#000',
-  pillColor = '#fff',
-  hoveredPillTextColor = '#fff',
-  pillTextColor,
+  textColor = '#fff',
+  hoveredTextColor = '#fff',
   initialLoadAnimation = true
 }: Props) {
   const pathname = usePathname();
-  const resolvedPillTextColor = pillTextColor ?? baseColor;
-
   const [isMobile, setIsMobile] = useState(false);
 
   const circleRefs = useRef<HTMLSpanElement[]>([]);
@@ -48,7 +44,6 @@ export default function PillNav({
   const logoRef = useRef<HTMLAnchorElement | null>(null);
   const navItemsRef = useRef<HTMLDivElement | null>(null);
 
-  /* ============ MOBILE CHECK ============ */
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -56,7 +51,6 @@ export default function PillNav({
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  /* ============ GSAP SETUP (DESKTOP ONLY) ============ */
   useEffect(() => {
     if (isMobile) return;
 
@@ -69,20 +63,14 @@ export default function PillNav({
 
         const R = ((w * w) / 4 + h * h) / (2 * h);
         const D = Math.ceil(2 * R) + 2;
-        const delta = Math.ceil(
-          R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))
-        ) + 1;
+        const delta = Math.ceil(R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))) + 1;
         const originY = D - delta;
 
         circle.style.width = `${D}px`;
         circle.style.height = `${D}px`;
         circle.style.bottom = `-${delta}px`;
 
-        gsap.set(circle, {
-          xPercent: -50,
-          scale: 0,
-          transformOrigin: `50% ${originY}px`
-        });
+        gsap.set(circle, { xPercent: -50, scale: 0, transformOrigin: `50% ${originY}px` });
 
         const label = pill.querySelector('.pill-label');
         const hover = pill.querySelector('.pill-label-hover');
@@ -105,16 +93,8 @@ export default function PillNav({
     window.addEventListener('resize', layout);
 
     if (initialLoadAnimation) {
-      gsap.fromTo(
-        logoRef.current,
-        { scale: 0 },
-        { scale: 1, duration: 0.6, ease }
-      );
-      gsap.fromTo(
-        navItemsRef.current,
-        { width: 0, overflow: 'hidden' },
-        { width: 'auto', duration: 0.6, ease }
-      );
+      gsap.fromTo(logoRef.current, { scale: 0 }, { scale: 1, duration: 0.6, ease });
+      gsap.fromTo(navItemsRef.current, { width: 0, overflow: 'hidden' }, { width: 'auto', duration: 0.6, ease });
     }
 
     return () => window.removeEventListener('resize', layout);
@@ -125,10 +105,7 @@ export default function PillNav({
     const tl = tlRefs.current[i];
     if (!tl) return;
     activeTweenRefs.current[i]?.kill();
-    activeTweenRefs.current[i] = tl.tweenTo(tl.duration(), {
-      duration: 0.3,
-      ease
-    });
+    activeTweenRefs.current[i] = tl.tweenTo(tl.duration(), { duration: 0.3, ease });
   };
 
   const handleLeave = (i: number) => {
@@ -136,79 +113,59 @@ export default function PillNav({
     const tl = tlRefs.current[i];
     if (!tl) return;
     activeTweenRefs.current[i]?.kill();
-    activeTweenRefs.current[i] = tl.tweenTo(0, {
-      duration: 0.2,
-      ease
-    });
+    activeTweenRefs.current[i] = tl.tweenTo(0, { duration: 0.2, ease });
   };
 
-  /* ============ MOBILE RENDER ============ */
-  if (isMobile) {
-    return <MobileNav logo={logo} items={items} />;
-  }
+  if (isMobile) return <MobileNav logo={logo} items={items} />;
 
-  const cssVars = {
-    ['--base' as any]: baseColor,
-    ['--pill-bg' as any]: pillColor,
-    ['--hover-text' as any]: hoveredPillTextColor,
-    ['--pill-text' as any]: resolvedPillTextColor
-  };
-
-  /* ============ DESKTOP RENDER ============ */
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[1000] px-4">
-      <nav className={`flex items-center ${className}`} style={cssVars}>
+    <div
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-[1000] px-6 py-1 rounded-full"
+      style={{ background: baseColor }}
+    >
+      <nav className={`flex items-center gap-4 ${className}`}>
         {/* LOGO */}
         <Link
           href="/"
           ref={logoRef}
-          className="rounded-full p-2 flex items-center justify-center"
-          style={{ background: 'var(--base)' }}
+          className="flex items-center justify-center p-3 rounded-full"
+          style={{ background: baseColor }}
         >
-          <img src={logo} alt={logoAlt} className="w-8 h-8 object-cover" />
+          <img src={logo} alt={logoAlt} className="w-7 object-cover" />
         </Link>
 
-        {/* NAV */}
-        <div
-          ref={navItemsRef}
-          className="ml-2 rounded-full flex"
-          style={{ background: 'var(--base)' }}
-        >
-          <ul className="flex p-[3px] gap-[3px]">
-            {items.map((item, i) => (
-              <li key={item.href} className="relative flex">
-                <Link
-                  href={item.href}
-                  className="relative overflow-hidden inline-flex items-center justify-center rounded-full font-semibold uppercase text-[14px]"
-                  style={{
-                    background: 'var(--pill-bg)',
-                    color: 'var(--pill-text)',
-                    padding: '10px 18px'
-                  }}
-                  onMouseEnter={() => handleEnter(i)}
-                  onMouseLeave={() => handleLeave(i)}
-                >
-                  <span
-                    ref={el => {
-                      if (el) circleRefs.current[i] = el;
-                    }}
-                    className="absolute left-1/2 bottom-0 rounded-full pointer-events-none"
-                    style={{ background: 'var(--base)' }}
-                  />
+        {/* NAV ITEMS */}
+        <div ref={navItemsRef} className="flex gap-3">
+          {items.map((item, i) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="relative font-semibold uppercase text-[14px] px-5 py-3 rounded-full transition-colors duration-300"
+              style={{ color: textColor }}
+              onMouseEnter={() => handleEnter(i)}
+              onMouseLeave={() => handleLeave(i)}
+            >
+              {/* GSAP Circle */}
+              <span
+                ref={el => {
+                  if (el) circleRefs.current[i] = el;
+                }}
+                className="absolute left-1/2 bottom-0 rounded-full pointer-events-none"
+                style={{ background: baseColor }}
+              />
 
-                  <span className="relative z-10">
-                    <span className="pill-label block">{item.label}</span>
-                    <span
-                      className="pill-label-hover absolute left-0 top-0"
-                      style={{ color: 'var(--hover-text)' }}
-                    >
-                      {item.label}
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+              {/* Text + hover text */}
+              <span className="relative z-10">
+                <span className="pill-label block">{item.label}</span>
+                <span
+                  className="pill-label-hover absolute left-0 top-0"
+                  style={{ color: hoveredTextColor }}
+                >
+                  {item.label}
+                </span>
+              </span>
+            </Link>
+          ))}
         </div>
       </nav>
     </div>

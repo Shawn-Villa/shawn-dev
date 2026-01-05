@@ -57,7 +57,7 @@ export function ProjectsSection() {
       id: 2,
       title: "Sinematics",
       description: `"Sinematics is a self-service kiosk-based cinema ticket booking system. It allows users to select and purchase movie tickets directly from the kiosk, eliminating the need to stand in line at a counter. The system supports quick payments using company-issued prepaid cards, similar to a beep card, which can be loaded directly at the counter. This streamlines transactions and minimizes the need for cashier assistance.`,
-      images: ["/Sinematics.png"],
+      images: ["/Sinematics.png","/sm1.png","/sm2.png","/sm3.png"],
       stack: ["Java", "Java Swing", "MySQL / MariaDB"],
       category: "School"
     },
@@ -73,7 +73,7 @@ export function ProjectsSection() {
       id: 4,
       title: "SignScope",
       description: `SignScope is a thesis project that combines an interactive educational system for deaf, mute, and hearing users, built in Java and featuring quizzes, learning modules, and hands-on activities, with AI-powered features developed in Python. It focuses on inclusive, interactive learning and AI-assisted insights.`,
-      images: ["/Signscope.png"],
+      images: ["/Signscope.png","/sign1.png","/sign2.png","/sign3.png","/sign4.png","/sign5.png","/sign6.png"],
       stack: ["Java", "Python", "AI / ML"],
       category: "Thesis"
     },
@@ -81,7 +81,7 @@ export function ProjectsSection() {
       id: 5,
       title: "MT Online Forms",
       description: `MT Online Forms is a digital system that automates the processing of purchase requisitions, purchase orders, and canvass sheets, reducing paper usage and streamlining internal workflows.`,
-      images: ["/MTFormsLogo.png"],
+      images: ["/MTFormsLogo.png","/mtf1.png","/mtf2.png","/mtf3.png","/mtf4.png","/mtf5.png"],
       stack: ["C#", "JavaScript", "Bootstrap", "ASP.NET MVC", "MS SQL"],
       category: "Work"
     },
@@ -89,7 +89,7 @@ export function ProjectsSection() {
       id: 6,
       title: "CDV Management System",
       description: `The CDV Management System (Check Disbursement Voucher) processes requests from branches and departments integrated with MT Online Forms. It serves as the final stage of processing, handling voucher payables, check vouchers, and check releases.`,
-      images: ["/CDV.png"],
+      images: ["/CDV.png","/cdv1.png","/cdv2.png","/cdv3.png","/cdv4.png","/cdv6.png"],
       stack: ["C#", "JavaScript", "Bootstrap", "ASP.NET MVC", "MS SQL"],
       category: "Work"
     },
