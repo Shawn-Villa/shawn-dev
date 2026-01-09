@@ -21,12 +21,12 @@ export default function Skills() {
       `}</style>
 
       <section id="skills" className="w-full bg-black py-20 px-6 overflow-x-hidden">
-         <motion.h2
-            className="text-4xl md:text-5xl font-extrabold text-center text-white mb-10"
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+        <motion.h2
+          className="text-4xl md:text-5xl font-extrabold text-center text-white mb-10"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           SKILLS
         </motion.h2>
 
@@ -34,8 +34,7 @@ export default function Skills() {
           {/* Programming & Technologies */}
           <motion.div
             className="relative group p-6 overflow-hidden rounded-xl cursor-pointer
-                       w-full sm:w-1/3 h-[380px]
-                       flex flex-col items-center text-center
+                       w-full sm:w-1/3 flex flex-col items-center text-center
                        bg-zinc-900 border border-zinc-700"
             initial={{ x: -200, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
@@ -48,7 +47,7 @@ export default function Skills() {
 
             <div className="relative z-10 flex flex-col items-center
                             text-white group-hover:text-black
-                            transition-colors duration-500">
+                            transition-colors duration-500 h-full">
               <FaCode className="text-5xl spinning-3d mb-4" />
               <h3 className="font-bold mb-3 text-lg md:text-xl">
                 Programming & Technologies
@@ -60,7 +59,7 @@ export default function Skills() {
                     Web Development:
                   </span>
                   <div className="text-center text-zinc-400 group-hover:text-black transition">
-                    HTML, CSS, Tailwind, Bootstrap
+                    HTML, CSS, Tailwind CSS, Bootstrap
                   </div>
                 </li>
                 <li>
@@ -76,7 +75,7 @@ export default function Skills() {
                     Microsoft Stack:
                   </span>
                   <div className="text-center text-zinc-400 group-hover:text-black transition">
-                    C#, ASP.NET, LINQ
+                    C#, ASP.NET Core, ASP.NET MVC, Blazor, LINQ, Entity Framework, Windows Forms
                   </div>
                 </li>
                 <li>
@@ -94,8 +93,7 @@ export default function Skills() {
           {/* Dev Tools & Environments */}
           <motion.div
             className="relative group p-6 overflow-hidden rounded-xl cursor-pointer
-                       w-full sm:w-1/3 h-[380px]
-                       flex flex-col items-center text-center
+                       w-full sm:w-1/3 flex flex-col items-center text-center
                        bg-zinc-900 border border-zinc-700"
             initial={{ scale: 0.85, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
@@ -108,7 +106,7 @@ export default function Skills() {
 
             <div className="relative z-10 flex flex-col items-center
                             text-white group-hover:text-black
-                            transition-colors duration-500">
+                            transition-colors duration-500 h-full">
               <FaLayerGroup className="text-5xl spinning-3d mb-4" />
               <h3 className="font-bold mb-3 text-lg md:text-xl">
                 Dev Tools & Environments
@@ -125,10 +123,10 @@ export default function Skills() {
                 </li>
                 <li>
                   <span className="text-zinc-300 group-hover:text-black group-hover:underline transition">
-                    Database & API Tools:
+                    API & Design Tools:
                   </span>
                   <div className="text-center text-zinc-400 group-hover:text-black transition">
-                    SQL Server(MSSQL), MySql, REST, Postman
+                    REST API, JWT, CQRS, Microservices, RabbitMQ, Postman, Swagger, SignalR
                   </div>
                 </li>
                 <li>
@@ -141,10 +139,10 @@ export default function Skills() {
                 </li>
                 <li>
                   <span className="text-zinc-300 group-hover:text-black group-hover:underline transition">
-                    Cloud:
+                    Databases:
                   </span>
                   <div className="text-center text-zinc-400 group-hover:text-black transition">
-                    AWS
+                    Microsoft SQL Server, MySQL, MariaDB
                   </div>
                 </li>
               </ul>
@@ -154,8 +152,7 @@ export default function Skills() {
           {/* Design, Reporting, & Support */}
           <motion.div
             className="relative group p-6 overflow-hidden rounded-xl cursor-pointer
-                       w-full sm:w-1/3 h-[380px]
-                       flex flex-col items-center text-center
+                       w-full sm:w-1/3 flex flex-col items-center text-center
                        bg-zinc-900 border border-zinc-700"
             initial={{ x: 200, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
@@ -168,7 +165,7 @@ export default function Skills() {
 
             <div className="relative z-10 flex flex-col items-center
                             text-white group-hover:text-black
-                            transition-colors duration-500">
+                            transition-colors duration-500 h-full">
               <FaTools className="text-5xl spinning-3d mb-4" />
               <h3 className="font-bold mb-3 text-lg md:text-xl">
                 Design, Reporting, & Support
@@ -188,7 +185,7 @@ export default function Skills() {
                     Reporting:
                   </span>
                   <div className="text-center text-zinc-400 group-hover:text-black transition">
-                    Crystal Report, Microsoft 365
+                    Crystal Reports, Microsoft 365
                   </div>
                 </li>
                 <li>
