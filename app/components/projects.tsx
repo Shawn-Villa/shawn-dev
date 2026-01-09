@@ -49,7 +49,7 @@ export function ProjectsSection() {
       id: 1,
       title: "VTA HOAMS",
       description: `VTA HOAMS is a management system for the Villa Teresita Homeowners Association. It helps track monthly dues, manage announcements, store member details, and organize property lots.`,
-      images: ["/VTAHAOMSLOGO.png"],
+      images: ["/VTAHAOMSLOGO.PNG"],
       stack: ["C#", "JavaScript", "Tailwind CSS", "ASP.NET Core API", "Entity Framework", "MS SQL"],
       category: "Personal"
     },
